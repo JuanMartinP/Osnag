@@ -1,3 +1,1 @@
-# Osnag
-
-/*Esto será un proyecto conjunto en C*/
+# p1_pointmap
