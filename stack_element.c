@@ -149,7 +149,9 @@ int stack_print(FILE * f, const Stack * pila)
 
   for(i = pila->top; i >= 0; i--)
   {
-    contador += fprintf(f, "[%d] \n", *(int*)element_getInfo(pila->item[i]));
+    contador += point_print(f, (Point*)(pila->item[i]));
+    printf("\n");
+    /*fprintf(f, "[%d] \n", *(int*)element_getInfo(pila->item[i]));*/
   }
 
   return contador;
