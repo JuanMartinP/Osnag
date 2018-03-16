@@ -18,7 +18,7 @@ Point * point_ini(int x, int y, char s)
 {
   Point * newPoint = NULL;
 
-/* TODO: comprobar si es válido s, x, e y */
+
   if (x < 0 || y < 0)
     return ERROR;
 

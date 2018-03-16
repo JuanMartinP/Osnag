@@ -50,6 +50,7 @@ int main(int argc, char *argv[]) {
 				return ERROR;
 
       point = map_getNeighborPoint(mapa, point, STAY);
+
       element_setInfo(ele, point);
 
       if(stack_push(pila, ele) == ERROR)
