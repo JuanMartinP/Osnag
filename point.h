@@ -52,6 +52,8 @@ Bool point_isBarrier(Point* );
 
 Bool point_isSpace(Point* );
 
+Bool point_isVisited(Point* );
+
 
 
 /* Modifica la coordenda X de un punto dado,

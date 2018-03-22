@@ -5,13 +5,14 @@
 #include "types.h"
 #include "map.h"
 
-int main(int argc, char *argv[]) {
-  Stack * pila;
-  Point * point;
+int main(int argc, char *argv[])
+{
+  Stack * pila = NULL;
+  Point * point = NULL;
   int x, y;
-  FILE * f;
-  Map * mapa;
-  Element* ele;
+  FILE * f = NULL;
+  Map * mapa = NULL;
+  Element* ele = NULL;
 
   if(argc < 2)
   {

@@ -15,7 +15,7 @@ la pila si ha ido bien
 ------------------------------------------------------------------*/
 Stack * stack_ini()
 {
-  Stack * pila;
+  Stack * pila = NULL;
 
   pila = (Stack*)calloc(1, sizeof(Stack));
   if(pila == NULL)
@@ -53,7 +53,7 @@ Status stack_push(Stack * pila, const Element * ele)
 {
   Element* local = NULL;
 
-  if(pila == NULL || ele == NULL || stack_isFull(pila))
+  if(pila == NULL || ele == NULL || stack_isFull(pila) == TRUE)
     return ERROR;
 
   local = element_copy(ele);
@@ -75,7 +75,7 @@ Element * stack_pop(Stack * pila)
 {
   Element* ele_top = NULL;
 
-  if(pila == NULL || stack_isEmpty(pila) == TRUE)
+  if((pila == NULL) || (stack_isEmpty(pila) == TRUE))
     return NULL;
 
   ele_top = pila->item[pila->top];
@@ -94,7 +94,7 @@ logra copiarlo o el elemento si lo logra
 ------------------------------------------------------------------*/
 Element * stack_top(const Stack * pila)
 {
-  Element * copia;
+  Element * copia = NULL;
 
   if(pila == NULL)
     return NULL;
@@ -111,9 +111,9 @@ Salida: TRUE si está vacia o FALSE si no lo esta
 Bool stack_isEmpty(const Stack * pila)
 {
   if(pila == NULL)
-    return FALSE;
+    return TRUE;
 
-  if(pila->top == -1)
+  if(pila->top < 0)
     return TRUE;
 
   return FALSE;
@@ -145,14 +145,12 @@ int stack_print(FILE * f, const Stack * pila)
   int contador = 0, i;
 
   if(pila == NULL || f == NULL)
-    return FALSE;
+    return 0;
 
   for(i = pila->top; i >= 0; i--)
   {
-    contador += point_print(f, (Point*)element_getInfo(pila->item[i]));
+    contador += element_print(f, pila->item[i]);
     printf("\n");
-    /*fprintf(f, "[%d] \n", *(int*)element_getInfo(pila->item[i]));*/
   }
-
   return contador;
 }

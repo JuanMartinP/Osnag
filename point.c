@@ -102,6 +102,15 @@ Bool point_isSpace(Point* p)
 }
 
 
+Bool point_isVisited(Point* p)
+{
+  if (point_getSymbol(p) == 'v')
+    return TRUE;
+  else
+    return FALSE;
+}
+
+
 /* Modifica la coordenda X de un punto dado,
 devuelve ERROR si se produce algún error */
 Status point_setCoordinateX(Point* point, const int x)

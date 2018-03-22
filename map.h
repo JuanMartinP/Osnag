@@ -4,8 +4,7 @@
 #include "point.h"
 #include "types.h"
 
-#define MAX_MAP 2048
-
+#define MAX_MAP 9000
 typedef struct _Map Map;
 
 

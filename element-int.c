@@ -31,11 +31,11 @@ Elimina un elemento. Entrada: Elemento a destruir.
 ------------------------------------------------------------------*/
 void element_destroy(Element * ele)
 {
-    if(ele==NULL)
-      return ;
+  if(ele==NULL)
+    return;
 
-    point_destroy(ele->info);
-    free(ele);
+/*  point_destroy(ele->info); */
+  free(ele);
 }
 
 /**------------------------------------------------------------------
@@ -100,7 +100,6 @@ escritos.
 ------------------------------------------------------------------*/
 int element_print(FILE * f, const Element * ele)
 {
-
   if (!ele || !f)
     return ERROR;
 

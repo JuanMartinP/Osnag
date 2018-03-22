@@ -8,71 +8,90 @@
 
 
 /* Añadir a argumentos: Stack * camino*/
-/* Cambiar: que devuelva Bool*/
-/* Objetivo: Si hay camino se imprime, y si no, no imprimimos nada */
-Point * deep_search(Map * map, Point * point)
+Bool deep_search(Map * map, Point * point)
 {
   Stack * pila = NULL;
-  Status flag = ERROR;
   Point * v = NULL, * w = NULL;
-  Element * ele_pop = NULL, * ele_push = NULL;
+  Element * in = NULL, * ele_pop = NULL;
   Move i;
 
   if (!map || !point)
-    return NULL;
+    return FALSE;
 
   pila = stack_ini();
+  in = element_ini();
+
   if(!pila)
-    return NULL;
-
-  ele_push = element_ini();
-  if(!ele_push)
-    return NULL;
-
-  element_setInfo(ele_push, point);
-  flag = stack_push(pila, ele_push);
-
-  while(stack_isEmpty(pila) == FALSE && flag == OK)
   {
+    return FALSE;
+  }
+
+  element_setInfo(in, point);
+  stack_push(pila, in);
+
+  while (stack_isEmpty(pila) != TRUE)
+  {
+    printf("\n----------------------------------\n");
     ele_pop = stack_pop(pila);
     v = (Point *)element_getInfo(ele_pop);
+    printf("\n>>>> Current space: ");
+    point_print(stdout, v);
 
-    if(point_getSymbol(v) != VISITED)
+    if (point_getSymbol(v) != VISITED)
     {
+      /* se visita el punto extraído de la pila */
       point_setSymbol(v, VISITED);
+
+      /* se actualiza el punto en el mapa */
       map_setPoint(map, v);
-      for(i=0; i<5; i++)
+      printf("\n");
+      /*map_print(stdout, map);*/
+      /* se añaden los vecinos para revisarlos posteriormente */
+      for(i=0; i<=4; i++)
       {
         w = map_getNeighborPoint(map, v, i);
-        if(!w) return NULL;
+
+        if(!w)
+          return FALSE;
+
         if(point_isOutput(w) == TRUE)
         {
-          return w;
+          printf("\n----------------------------------\n");
+          printf("\n>>>> Output  space: ");
+          point_print(stdout, w);
+          printf("\n\n");
+
+          map_print(stdout, map);
+
+          stack_destroy(pila);
+          point_destroy(v);
+          point_destroy(w);
+          return TRUE;
         }
         else if(point_isSpace(w) == TRUE)
         {
-          ele_push = element_ini();
-          if(!ele_push) return NULL;
-          element_setInfo(ele_push, w);
-          stack_push(pila, ele_push);
+          element_setInfo(ele_pop, w);
+          stack_push(pila, ele_pop);
         }
       }
     }
+/* element_destroy(ele_pop); */
   }
-
+/*
   stack_destroy(pila);
-
   point_destroy(v);
   point_destroy(w);
-  return NULL;
+*/
+  return FALSE;
 }
+
 
 
 
 int main(int argc, char const *argv[])
 {
   Map * map = NULL;
-  Point * input = NULL, * output = NULL;
+  Point * input = NULL;
   FILE * file = NULL;
 
   map = map_ini();
@@ -100,14 +119,19 @@ int main(int argc, char const *argv[])
   if(!input)
     return ERROR;
 
-  output = deep_search(map, input);
-  if(!output)
-    return ERROR;
 
-  if(output == map_getOutput(map))
-    printf("Es posible encontrar un camino\n");
+  if (deep_search(map, input)==TRUE)
+  {
+    fprintf(stdout, "\n\n----------------------------------");
+    fprintf(stdout, "\n     RESULT:  THERE IS A WAY");
+    fprintf(stdout, "\n----------------------------------\n\n");
+  }
   else
-    printf("No es posible encontrar un camino\n");
+  {
+    fprintf(stdout, "\n\n----------------------------------");
+    fprintf(stdout, "\n     RESULT:  THERE IS NO WAY");
+    fprintf(stdout, "\n----------------------------------\n\n");
+  }
 
   fclose(file);
   point_destroy(input);

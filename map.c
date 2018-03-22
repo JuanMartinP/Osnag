@@ -75,22 +75,22 @@ Point* map_getOutput(const Map* map)
  partir de un punto inicial, o NULL si se produce algún error */
 Point* map_getNeighborPoint(const Map* map, const Point* point, const Move mov)
 {
-  int nRows, x, y, p;
+  int nCols, x, y, p;
 
   if (!map || !point)
     return NULL;
 
-  nRows =  map_getNcols(map);
+  nCols = map_getNcols(map);
 
   x = point_getCoordinateX(point);
   y = point_getCoordinateY(point);
 
-  p = x * nRows + y;
+  p = y * nCols + x;
 
   if (mov == UP)
-    return map->data[p-nRows];
+    return map->data[p-nCols];
   else if (mov == DOWN)
-    return map->data[p+nRows];
+    return map->data[p+nCols];
   else if (mov == LEFT)
     return map->data[p-1];
   else if (mov == RIGHT)
@@ -120,7 +120,6 @@ corresponda. Devuelve OK si todo ha ido correctamente (se ha podido
 incluir/actualizar el punto). */
 Status map_setPoint(Map* map, const Point* point)
 {
-  Point* point2 = NULL;
   int dataPosition;
 
   if(!map || !point)
@@ -130,17 +129,20 @@ Status map_setPoint(Map* map, const Point* point)
                  point_getCoordinateX(point);
 
   if (!(map->data[dataPosition]))
+  {
     /* Nuevo point (con reserva de memoria), que es como el que pasan */
-    point2 = point_copy(point);
+    map->data[dataPosition] = point_copy(point);
 
-  map->data[dataPosition] = point2;
+    if(point_getSymbol(map->data[dataPosition]) == 'i')
+      map->input = map->data[dataPosition];
 
-  if(point_getSymbol(point2) == 'i')
-    map->input = point2;
-
-  if(point_getSymbol(point2) == 'o')
-    map->output = point2;
-
+    if(point_getSymbol(map->data[dataPosition]) == 'o')
+      map->output = map->data[dataPosition];
+  }
+  else
+  {
+    point_setSymbol(map->data[dataPosition], point_getSymbol(point));
+  }
   return OK;
 }
 
