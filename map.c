@@ -37,7 +37,7 @@ void map_free(Map* map)
   if (!map)
     return;
 
-  for (i=0; i<MAX_MAP; i++)
+  for (i=0; i< (map_getNcols(map)*map_getNrows(map)); i++)
   {
     point_destroy(map->data[i]);
     map->data[i] = NULL;

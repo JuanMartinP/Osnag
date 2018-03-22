@@ -135,7 +135,6 @@ int main(int argc, char const *argv[])
 
   fclose(file);
   point_destroy(input);
-  map_free(map);
-
+/*  map_free(map); */
   return 0;
 }

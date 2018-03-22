@@ -34,7 +34,8 @@ void element_destroy(Element * ele)
   if(ele==NULL)
     return;
 
-/*  point_destroy(ele->info); */
+  /* OJO AQUÍ */
+  point_destroy(ele->info);
   free(ele);
 }
 

@@ -7,12 +7,12 @@
 
 int main(int argc, char *argv[])
 {
-  Stack * pila = NULL;
-  Point * point = NULL;
+  Stack * pila;
+  Point * point;
   int x, y;
-  FILE * f = NULL;
-  Map * mapa = NULL;
-  Element* ele = NULL;
+  FILE * f;
+  Map * mapa;
+  Element* ele;
 
   if(argc < 2)
   {

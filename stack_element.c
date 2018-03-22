@@ -145,8 +145,8 @@ int stack_print(FILE * f, const Stack * pila)
   int contador = 0, i;
 
   if(pila == NULL || f == NULL)
-    return 0;
-
+    return FALSE;
+    
   for(i = pila->top; i >= 0; i--)
   {
     contador += element_print(f, pila->item[i]);
